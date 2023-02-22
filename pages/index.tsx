@@ -1,19 +1,28 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
+import styles from '../styles/Home.module.css'
 const inter = Inter({ subsets: ['latin'] })
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import Link from 'next/link'
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
-import React, { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
-
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Home() {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const password = "1234"
+  const [passwordInput, setPasswordInput] = useState("")
+  const router = useRouter()
+  const handleLoginButton = (e: any) => {
+    e.preventDefault()
+    console.log("Login button clicked", passwordInput)
+    if (passwordInput === password) {
+      console.log("Password correct")
+      router.push("/property")
+    }
+  }
   return (
     <>
 
@@ -24,92 +33,32 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <Navbar bg="primary" variant="dark">
           <Container>
-            <Navbar.Brand href="/">Property Recode</Navbar.Brand>
-            <Nav className="me-auto">
-              <Nav.Link href="/Add-property">ADD PROPERTY</Nav.Link>
-              <Nav.Link href="/">PROPERTY</Nav.Link>
-            </Nav>
+            <Navbar.Brand href="#home">Property Recode</Navbar.Brand>
           </Container>
         </Navbar>
-        <br />
-
       </Head>
 
-      <main>
 
-        <div className='propertyItam'>
-
-          <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="https://media.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif" />
-            <Card.Body>
-              <Card.Title>Name Property1</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-              <Button variant="primary" onClick={handleShow}>Show</Button>{' '}
-             
-            </Card.Body>
-          </Card>
-          <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-<Card style={{ width: '30rem' }}>
-            <Card.Img variant="top" src="https://media.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif" />
-            <Card.Body>
-              <Card.Title>Name Property1</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-<Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-            </Card.Body>
-          </Card>
-</Modal>
-
-
-          <Card style={{ width: '18rem'}}>
-            <Card.Img variant="top" src="https://media.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif" />
-            <Card.Body>
-              <Card.Title>Name Property2</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-              <Button variant="primary">Show</Button>
-            </Card.Body>
-          </Card>
-
-          <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="https://media.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif" />
-            <Card.Body>
-              <Card.Title>Name Property3</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-              <Button variant="primary">Show</Button>
-            </Card.Body>
-          </Card>
-
-          <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="https://media.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif" />
-            <Card.Body>
-              <Card.Title>Name Property4</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-              <Button variant="primary">show</Button>
-            </Card.Body>
-          </Card>
-        </div>
+      <main className={styles.main}>
+        <Card><Card.Body><Form>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" placeholder="Password" onInput={(e: any) => {
+              console.log("Password input changed", e.target.value);
+              setPasswordInput(e.target.value)
+            }} />
+            <Form.Text className="text-muted">
+              Please enter your password to use the system.
+            </Form.Text>
+          </Form.Group>
+          <Button variant="success" type="submit" onClick={handleLoginButton}>
+            Login
+          </Button>
+        </Form>
+        </Card.Body>
+        </Card>
       </main>
+
     </>
   )
 }
