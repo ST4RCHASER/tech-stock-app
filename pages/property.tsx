@@ -85,6 +85,7 @@ export default function Home() {
             property.map((item) => {
               return (
                 <DisplayCard
+                  key={item._id}
                   name={item.name}
                   id={item._id}
                   image={item.image}
